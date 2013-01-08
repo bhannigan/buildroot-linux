@@ -13,7 +13,7 @@ XBMC_INSTALL_TARGET = YES
 XBMC_DEPENDENCIES = host-lzo host-sdl_image
 
 XBMC_CONF_OPT+= --enable-neon --enable-gles --disable-sdl --disable-x11 --disable-xrandr \
-  --disable-projectm --enable-debug --disable-joystick --with-cpu=cortex-a9 \
+  --disable-projectm --enable-debug --enable-joystick --with-cpu=cortex-a9 \
   --enable-codec=amcodec --enable-player=amlplayer
 
 XBMC_DEPENDENCIES += libogg flac libmad libmpeg2 libogg \
@@ -21,7 +21,8 @@ XBMC_DEPENDENCIES += libogg flac libmad libmpeg2 libogg \
   python lzo zlib libgcrypt openssl mysql_client sqlite fontconfig \
   freetype jasper jpeg libmodplug libpng libungif tiff libcurl \
   libmicrohttpd libssh2 boost fribidi ncurses pcre libnfs afpfs-ng libplist libshairport libbluray \
-  readline expat libxml2 yajl samba30 libass opengl libusb-compat avahi udev tinyxml taglib18 libssh
+  readline expat libxml2 yajl samba30 libass opengl libusb-compat avahi udev tinyxml taglib18 libssh \
+  host-sdl
 
 ifeq ($(BR2_PACKAGE_LIBAMPLAYERM1),y)
 XBMC_DEPENDENCIES += libamplayerm1
@@ -40,6 +41,9 @@ XBMC_CONF_ENV += USE_TEXTUREPACKER_NATIVE_ROOT="$(HOST_DIR)/usr"
 
 # For braindead apps like mysql that require running a binary/script
 XBMC_CONF_ENV += PATH=$(STAGING_DIR)/usr/bin:$(TARGET_PATH)
+
+# for joystick support
+XBMC_CONF_ENV += LDFLAGS="$(LDFLAGS) -lSDL"
 
 define XBMC_BOOTSTRAP
   cd $(XBMC_DIR) && ./bootstrap

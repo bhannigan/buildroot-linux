@@ -9,6 +9,8 @@ SDL_SITE:=http://www.libsdl.org/release
 
 SDL_INSTALL_STAGING = YES
 
+HDRS += SDL_joystick.h
+
 ifeq ($(BR2_PACKAGE_SDL_FBCON),y)
 SDL_CONF_OPT+=--enable-video-fbcon=yes
 else
